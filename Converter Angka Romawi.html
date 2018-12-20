@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Converter Angka</title>
+    <style>
+        
+    body {
+        padding-top: 80px;
+        padding-left: 600px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 18px;
+        background: url("Background.jpg") no-repeat;
+        background-size: cover;
+        color: black
+    }
+
+    input {
+        background: yellowgreen;
+        color: black;
+        border-radius: 8px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-right: 6px;
+        padding-left: 6px
+    }
+
+    button {
+        background: yellowgreen;
+        color: black;
+        border-radius: 8px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        padding-right: 8px;
+        padding-left: 8px
+    }
+
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Converter Angka Romawi</h1>
+        Silakan input: <input type="text" id="input">
+        <br><br>
+        <input type="radio" id="romawi" name="opt"> <label for="romawi"><b>Ubah ke Angka Romawi</b></label>
+        <input type="radio" id="arab" name="opt"> <label for="arab"><b>Ubah ke Angka Arab</b></label>
+        <br><br>
+        <button type="button" id="proses" onclick="proses()">PROSES</button>
+
+        <h2 id="result"></h2>
+    </center>
+
+
+    <script>
+        document.getElementById("input").focus();
+        var arr = [];
+        var res = 0;
+        
+
+        function proses(){
+            var x = document.getElementById("input").value;
+            if(document.getElementById("romawi").checked){ //kalau yg ke check romawi
+                if(isNaN(x) == true){ //validasi yg diinput harus angka
+                    document.getElementById("result").innerHTML = "Mohon isi dengan angka Arab yang valid!"
+                }
+                else{
+                    arr = [];
+                    if(Math.floor(x/1000)>=1){
+                        for(i=1;i<=Math.floor(x/1000);i++){
+                            arr.push("M");
+                        }
+                        x = x-(1000*Math.floor(x/1000));
+                    }
+                    if(Math.floor(x/900)>=1){
+                        for(i=1;i<=Math.floor(x/900);i++){
+                            arr.push("CM");
+                        }
+                        x = x-(900*Math.floor(x/900));
+                    }
+                    if(Math.floor(x/500>=1)){
+                        for(i=1;i<=Math.floor(x/500);i++){
+                            arr.push("D");
+                        }
+                        x = x - (500*Math.floor(x/500));
+                    }
+                    if(Math.floor(x/400>=1)){
+                        for(i=1;i<=Math.floor(x/400);i++){
+                            arr.push("CD");
+                        }
+                        x = x - (400*Math.floor(x/400));
+                    }
+                    if(Math.floor(x/100>=1)){
+                        for(i=1;i<=Math.floor(x/100);i++){
+                            arr.push("C");
+                        }
+                        x = x - (100*Math.floor(x/100));
+                    }
+                    if(Math.floor(x/90>=1)){
+                        for(i=1;i<=Math.floor(x/90);i++){
+                            arr.push("XC");
+                        }
+                        x = x - (90*Math.floor(x/90));
+                    }
+                    if(Math.floor(x/50>=1)){
+                        for(i=1;i<=Math.floor(x/50);i++){
+                            arr.push("L");
+                        }
+                        x = x - (50*Math.floor(x/50));
+                    }
+                    if(Math.floor(x/40>=1)){
+                        for(i=1;i<=Math.floor(x/40);i++){
+                            arr.push("XL");
+                        }
+                        x = x - (40*Math.floor(x/40));
+                    }
+                    if(Math.floor(x/10>=1)){
+                        for(i=1;i<=Math.floor(x/10);i++){
+                            arr.push("X");
+                        }
+                        x = x - (10*Math.floor(x/10));
+                    }
+                    if(Math.floor(x/9>=1)){
+                        for(i=1;i<=Math.floor(x/9);i++){
+                            arr.push("XI");
+                        }
+                        x = x - (9*Math.floor(x/9));
+                    }
+                    if(Math.floor(x/5>=1)){
+                        for(i=1;i<=Math.floor(x/5);i++){
+                            arr.push("V");
+                        }
+                        x = x - (5*Math.floor(x/5));
+                    }
+                    if(Math.floor(x/4>=1)){
+                        for(i=1;i<=Math.floor(x/4);i++){
+                            arr.push("IV");
+                        }
+                        x = x - (4*Math.floor(x/4));
+                    }
+                    if(Math.floor(x/1>=1)){
+                        for(i=1;i<=Math.floor(x/1);i++){
+                            arr.push("I");
+                        }
+                        x = x - (1*Math.floor(x/1));
+                    }
+
+                    document.getElementById("result").innerHTML = arr.join("");
+                }
+            }
+            else if(document.getElementById("arab").checked){ //kalau yg ke check arab
+                if(isNaN(x) == false){ //validasi yg diinput tidak boleh angka
+                    document.getElementById("result").innerHTML = "Mohon isi dengan angka Romawi yang valid!"
+                }
+                else {
+                    res = 0;
+                    var z = x.toUpperCase()
+                    var y = z.split("");
+                    for(i=0;i<y.length;i++){
+                        if(y[i] == "M"){
+                            delete y[i];
+                            res+=1000;
+                        }
+                        if(y[i] == "C" && y[i+1] == "M"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=900;
+                        }
+                        if(y[i] == "D"){
+                            delete y[i];
+                            res+=500;
+                        }
+                        if(y[i] == "C" && y[i+1] == "D"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=400;
+                        }
+                        if(y[i] == "C"){
+                            delete y[i];
+                            res+=100;
+                        }
+                        if(y[i] == "X" && y[i+1] == "C"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=90;
+                        }
+                        if(y[i] == "L"){
+                            delete y[i];
+                            res+=50;
+                        }
+                        if(y[i] == "X" && y[i+1] == "L"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=40;
+                        }
+                        if(y[i] == "X"){
+                            delete y[i];
+                            res+=10;
+                        }
+                        if(y[i] == "I" && y[i+1] == "X"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=9;
+                        }
+                        if(y[i] == "V" && y[i+1] == "I"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=6;
+                        }
+                        if(y[i] == "V"){
+                            delete y[i];
+                            res+=5;
+                        }
+                        if(y[i] == "I" && y[i+1] == "V"){
+                            delete y[i];
+                            delete y[i+1];
+                            res+=4;
+                        }
+                        if(y[i] == "I"){
+                            delete y[i];
+                            res+=1;
+                        }
+                    }
+                    document.getElementById("result").innerHTML = res;
+                }
+
+            }
+        }
+    </script>
+</body>
+</html>
